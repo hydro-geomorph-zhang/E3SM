@@ -505,10 +505,10 @@ contains
 
              nf = f_area  ; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) + ca_a
              if (index_x2a_Fall_fco2_lnd /= 0) then
-                nf = f_csurf ; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) - ca_a*x2a_a%rAttr(index_x2a_Fall_fco2_lnd,n)
+                nf = f_csurf ; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) + ca_a*x2a_a%rAttr(index_x2a_Fall_fco2_lnd,n)
              end if
              if (index_x2a_Faoo_fco2_ocn /= 0) then
-                nf = f_csurf ; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) - ca_a*x2a_a%rAttr(index_x2a_Faoo_fco2_ocn,n)
+                nf = f_csurf ; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) + ca_a*x2a_a%rAttr(index_x2a_Faoo_fco2_ocn,n)
              end if
 
           enddo
@@ -584,7 +584,7 @@ contains
           ca_l =  dom_l%data%rAttr(kArea,n) * frac_l%rAttr(kl,n)
           nf = f_area  ; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) + ca_l
           if (index_x2a_Fall_fco2_lnd /= 0) then
-             nf = f_csurf ; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) - ca_l*l2x_l%rAttr(index_l2x_Fall_fco2_lnd,n)
+             nf = f_csurf ; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) + ca_l*l2x_l%rAttr(index_l2x_Fall_fco2_lnd,n)
           end if
        end do
     end if
@@ -1169,10 +1169,8 @@ contains
          write(logunit,FAH) subname,'NET CARBON BUDGET (kg/m2s*1e9): period = ',trim(pname(ip)),': date = ',cdate,sec
          write(logunit,FA0r) '     atm','     lnd','     rof','     ocn','  ice nh','  ice sh','     glc',' *SUM*  '
          do nf = f_c, f_c_end
-!JW            write(logunit,FA1r)   fname(nf),dataGpr(nf,c_atm_ar,ip)+dataGpr(nf,c_atm_as,ip), &
-!JW                 dataGpr(nf,c_lnd_lr,ip)+dataGpr(nf,c_lnd_ls,ip), &
-            write(logunit,FA1r)   fname(nf),dataGpr(nf,c_atm_as,ip), &
-                 dataGpr(nf,c_lnd_lr,ip), &
+            write(logunit,FA1r)   fname(nf),dataGpr(nf,c_atm_ar,ip)+dataGpr(nf,c_atm_as,ip), &
+                 dataGpr(nf,c_lnd_lr,ip)+dataGpr(nf,c_lnd_ls,ip), &
                  dataGpr(nf,c_rof_rr,ip)+dataGpr(nf,c_rof_rs,ip), &
                  dataGpr(nf,c_ocn_or,ip)+dataGpr(nf,c_ocn_os,ip), &
                  dataGpr(nf,c_inh_ir,ip)+dataGpr(nf,c_inh_is,ip), &
